@@ -1,5 +1,6 @@
 const express = require('express');
 const routerApi = require('./routes');
+const routerApi1 = require('./routes/indexventas');
 const app = express();
 const port = 3100;
 
@@ -10,6 +11,7 @@ app.get('/', (req, res) => {
 });
 
 routerApi(app);
+routerApi1(app);
 
 /* app.get('/products', (req, res) => {
   res.json([
