@@ -28,47 +28,47 @@ router3.get('/:id',
 //AGREGAR
 router3.post('/',
             validatorHandler(createPaqueteSchema, 'body'),
-            async (req,res) =>{
+            async (req, res) => {
   const body = req.body;
   const nuevoPaquete = await service.create(body);
   res.status(201).json({
-    message: 'creado',
+    message: 'nuevo',
     nuevoPaquete
   });
 });
 
-//ACTUALIZAR - EDITAR
 router3.patch('/:id',
-              validatorHandler(updatePaqueteSchema, 'params'),
-              validatorHandler(updatePaqueteSchema, 'body'),
-              async (req, res, next) => {
+               validatorHandler(getPaqueteSchema, 'params'),
+               validatorHandler(updatePaqueteSchema, 'body'),
+               async (req, res, next) => {
   try {
-    const { id } = req.params;
-    const body = req.body;
-    const paquete = await service.update(id, body);
-    res.status(200).json({
-      message: 'actualizado',
-      paquete
-    });
+  const {id} = req.params;
+  const body = req.body;
+  const paquete = await service.update(id, body);
+  res.status(200).json({
+    message: 'actualizado',
+    paquete
+  });
   } catch(error) {
     next(error);
   }
 });
 
-//ELIMINAR
 router3.delete('/:id',
               validatorHandler(getPaqueteSchema, 'params'),
-              async (req, res, next) => {
+               async (req, res, next) => {
   try {
-    const { id } = req.params;
-    const paquete = await service.delete(id);
-    res.json({
-      message: 'eliminado',
-      paquete
-    });
+  const {id} = req.params;
+  const eliminar = await service.delete(id);
+  res.status(200).json({
+    message: 'eliminado',
+    eliminar
+  });
+
   } catch(error) {
     next(error);
   }
 });
+
 
 module.exports = router3;
