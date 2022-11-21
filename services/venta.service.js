@@ -1,4 +1,7 @@
+const { rejects } = require('assert');
 const crypto1 = require('crypto');
+const { resolve } = require('path');
+const boom = require('@hapi/boom');
 
 class ventaService {
 
@@ -7,7 +10,7 @@ class ventaService {
     this.generate(10);
   }
 
-  generate(limite){
+  async generate(limite){
     for (let index = 0; index < limite; index++) {
       this.ventas.push({
         id: crypto1.randomUUID(),
@@ -16,7 +19,7 @@ class ventaService {
     }
   }
 
-  create(data){
+  async create(data){
     const nuevaVenta = {
       id: crypto1.randomUUID(),
       ...data
@@ -25,22 +28,40 @@ class ventaService {
     return nuevaVenta;
   }
 
-  find() {
-    return this.ventas;
+  async find() {
+
+
+   /*  setTimeout(() => {
+      return this.ventas;
+    }, 3000); */
+
+
+   /*  return new Promise((resolve, rejects) =>{
+      setTimeout(() => {
+        resolve(this.ventas);
+        }, 3000);
+        }); */
+
+     return this.ventas;
   }
 
-  findOne(id){
-    return this.ventas.find(venta => {
+  async findOne(id){
+
+    const venta = this.ventas.find(venta => {
       return venta.id === id;
-    })
+    });
+    if (!venta ) {
+      throw boom.notFound('venta fallida');
+    }
+    return venta;
   }
 
-  update(id, changes){
+  async update(id, changes){
     const index = this.ventas.findIndex(venta => {
       return venta.id === id;
     });
     if (index === -1) {
-      throw new Error('Producto no encontrado');
+      throw boom.notFound('venta fallida');
     }
     const venta = this.ventas[index];
     this.ventas [index] = {
@@ -52,12 +73,12 @@ class ventaService {
 
 
 
-  delete(id){
+    async delete(id){
     const index = this.ventas.findIndex(venta => {
       return venta.id === id;
     });
     if (index === -1) {
-      throw new Error('Producto no encontrado');
+      throw boom.notFound('venta fallida');
     }
     this.ventas.splice(index, 1);
     return { id };

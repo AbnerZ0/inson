@@ -4,14 +4,20 @@ const routerApi1 = require('./routes/indexventas');
 const app = express();
 const port = 3100;
 
-app.use(express.json());
+const {logError, errorHandler, boomErrorHandler} = require('./middlewares/error.handler')
 
+app.use(express.json());
 app.get('/', (req, res) => {
     res.send('HOLLAAA');
 });
 
 routerApi(app);
 routerApi1(app);
+
+app.use(logError);
+app.use(boomErrorHandler);
+app.use(errorHandler);
+
 
 /* app.get('/products', (req, res) => {
   res.json([
