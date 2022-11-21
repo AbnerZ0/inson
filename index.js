@@ -4,7 +4,8 @@ const routerApi1 = require('./routes/indexventas');
 const app = express();
 const port = 3100;
 
-const {logError, errorHandler, boomErrorHandler} = require('./middlewares/error.handler')
+const {logError, errorHandler, boomErrorHandler} = require('./middlewares/error.handler');
+const routerApi3 = require('./routes/indexpaquete');
 
 app.use(express.json());
 app.get('/', (req, res) => {
@@ -13,6 +14,7 @@ app.get('/', (req, res) => {
 
 routerApi(app);
 routerApi1(app);
+routerApi3(app);
 
 app.use(logError);
 app.use(boomErrorHandler);
