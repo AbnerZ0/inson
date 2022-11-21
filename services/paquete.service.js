@@ -5,7 +5,7 @@ const boom = require('@hapi/boom');
 class paqueteService {
 
   constructor(){
-    this.paquete = [];
+    this.paquetes = [];
     this.generate(10);
   }
 
@@ -13,7 +13,7 @@ class paqueteService {
     for (let index = 0; index < limite; index++) {
       this.paquetes.push({
         id: crypto.randomUUID(),
-        nombre: 'producto ' + index,
+        nombre: 'Paquete ' + index,
         precio: 10 + Math.floor(Math.random()*190),
         estaBloqueado: Math.random() < 0.25
       });

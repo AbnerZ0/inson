@@ -1,7 +1,7 @@
 const express = require('express');
 const router3 = express.Router();
-/* const validatorHandler = require('./../middlewares/validator.handler');
-const { createProductoSchema, updateProductoSchema, getProductoSchema } = require('./../schemas/producto.schema') */
+const validatorHandler = require('./../middlewares/validator.handler');
+const { createPaqueteSchema, updatePaqueteSchema, getPaqueteSchema } = require('./../schemas/paquete.schema')
 const paqueteService = require('./../services/paquete.service');
 const service = new paqueteService();
 
@@ -13,7 +13,7 @@ router3.get('/', async (req, res) => {
 //****************PAQUETES*************************
 
 router3.get('/:id',
-            validatorHandler(getProductoSchema, 'params'),
+            validatorHandler(getPaqueteSchema, 'params'),
             async (req, res, next) => {
   try{
     const { id } = req.params;
@@ -27,7 +27,7 @@ router3.get('/:id',
 //ROUTER ENFOCADOS
 //AGREGAR
 router3.post('/',
-            validatorHandler(createProductoSchema, 'body'),
+            validatorHandler(createPaqueteSchema, 'body'),
             async (req,res) =>{
   const body = req.body;
   const nuevoPaquete = await service.create(body);
@@ -39,8 +39,8 @@ router3.post('/',
 
 //ACTUALIZAR - EDITAR
 router3.patch('/:id',
-              validatorHandler(updateProductoSchema, 'params'),
-              validatorHandler(updateProductoSchema, 'body'),
+              validatorHandler(updatePaqueteSchema, 'params'),
+              validatorHandler(updatePaqueteSchema, 'body'),
               async (req, res, next) => {
   try {
     const { id } = req.params;
@@ -57,7 +57,7 @@ router3.patch('/:id',
 
 //ELIMINAR
 router3.delete('/:id',
-              validatorHandler(getProductoSchema, 'params'),
+              validatorHandler(getPaqueteSchema, 'params'),
               async (req, res, next) => {
   try {
     const { id } = req.params;
